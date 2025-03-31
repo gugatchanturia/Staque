@@ -1,0 +1,93 @@
+Guga Tchanturia
+
+This code represents My implementation of the data structure Staque using the doubly linked list strategy.
+I start by first creating a Node class, which contains two node pointers to its previous and next elements,
+that is why it is called doubly linked, it holds the location of its previous and next members, and obviously its own data. Also the
+constant variable currentIndex and ownIndex, explanation of these variables will be down below in the explanation of Node constructor
+method. Class Staque has 3 attributes: first element, last element, and the size(personal preference).
+It has several methods for constructing and destructing Staque, copying and assigning it to another Staque, also the basics like: add(),
+remove(), isEmpty(), display() and getsize() methods.
+
+The implementation of the previously mentioned methods:
+
+Node constructor: Node(int data)
+Class Node contains one constructor which takes one argument - the data and assigns its next and prev Node
+pointers to null automatically. Also the Node class contains constant variable currentIndex which is used to track the order
+of which the elements were added. Since Staque must follow LIFO rule we need this index to differentiate which element to remove
+while calling remove() function, since it removes the lastly added element. The ownIndex holds the value of current index
+at the time when that Node was created. Variable ownIndex was needed for each Node to save and not be changed.
+
+Constructor: Staque()
+This method creates an empty Staque, sets first and last element as null pointers and size to zero.
+
+Destructor: ~Staque()
+This method traverses through the Staque, deleting each node pointer until it is empty, and lastly assigns
+first and last to null pointers and sets size to zero.
+
+Assignment operator overloading: const Staque& operator=(const Staque& right)
+This method starts operations only if the right and left hand side of the assignment operator do not have the
+same address. If not, the method first calls destructor on the current - the left side staque to empty it and
+make it ready for inserting new elements. Then checks if the right staque is empty, if it is then it just creates
+empty staque using the manner mentioned earlier. If right's size is greater than 1 method starts copying each element
+to the left staque. It uses two pointers to move around in both staques, copies the first one outside the loop, and
+enters the loop until it hits the null pointer, copying every element, setting pointers to its previous and next elements
+correctly, and then moving both pointers one element to their next ones. In the end it sets the lastly used pointer at
+left staque's last, and copies the size.
+
+Copy constructor: Staque(const Staque& original)
+This method uses the copying method mentioned earlier in assignment operator overloading, it just skips the part
+when that method checks the addresses of left and right hand side elements and destruction of the current staque.
+
+Adding an element: void add(int data)
+For adding elements my implementation of Staque follows the provided rules of prompt - if odd add to back, if even add to front.
+My implementation of this method first checks if the Staque is empty, because there is not front nor the back yet, and assigns
+bot of them to the new current element and increments size and exits. If the size is greater than 0 it checks whether the number
+is odd or even and adds it accordingly either in the back or front, while also assigning the pointers to the previous and next
+members of a staque correctly.
+
+Removing with no parameters: void remove()
+For this method to follow the LIFO rule, we needed to add two variables in the node class which help us keep the track of which element
+was added last. Since new elements can only be added either from front or back we need to compare the indexes of these two Nodes and delete
+whichever is the highest.
+
+
+Removing with one element: void remove(std::string oddOrEven)
+This method takes string as a parameter which determines whether user wants to remove the odd or even element.
+The method checks first if the staque is empty and exits if it is. Then transforms the provided string to lowercase to avoid errors
+later while comparing strings (for example "Even" and "even" stand both for even but are not equal while comparing).
+Then it checks if the size is one and given preference odd or even matches the existing element's type, if everything is true
+it deletes that element and sets everything to null pointers. If the execution still runs after those checks then new boolean
+value isFMostRecent is introduced. I checks if the first element of the staque is the most recent, if it is false therefore the lastly added
+element is the most recent one. We need this variable to stick with LIFO rule of removing elements. We check the users preference "even" or "odd"
+then if the values at first and last element match preferences respectively, and then if it is needed to remove first element checks if the first is
+most recent or if back element is needed to be removed back. The variable holds the comparison of the first and last elements' indexes. If both cases
+turn out to be false the error is provoked, saying that asked type of element cant be removed since its not the most recent (the errors in the driver
+are intended to be there, to showcase the adherence to the LIFO rule).
+
+
+Removing with two elements: void remove(int num, std::string oddOrEven)
+This method gets two parameters - number and type of elements to be removed. This method acts similarly to previous method, it just has
+an additional loop to remove as many elements as user asked, if possible, if not then it removes however much is possible and ignores the rest numbers;
+It also checks the number of elemnts provided, if it is greater than actual size of staque, it is set to the size of staque, since we can not remove
+n odd elements if the number of elements in total is less than n. Elements are compared with same manner as the previous method, with additional return; in the
+else{} field to avoid running code redundantly.
+
+Is empty method: bool isempty() const
+Returns boolean value according to staque's size, if 0 - true, if >0 - false.
+
+Display method: void display()
+Traverses through the staque and displays all the elements until it reaches the end.
+
+size getter: int getSize() const
+Returns the size of staque, mainly used for testing the correctness of my code.
+
+About driver.cpp
+In the driver there is a clear example of all the methods explained above, like the prompt asked to do.
+
+Conclusion
+I've spent a lot of time designing this code so that firstly it works successfully and secondly it is easily readable and self-explanatory.
+The main struggle for me was managing the memory allocations for the doubly linked list implementation, nut managed to solve the issues faced.
+If you have any questions, trouble understanding or doubts please contact me, I will be happy to answer all the questions.
+
+
+
